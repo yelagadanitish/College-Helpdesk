@@ -1,0 +1,682 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Helpdesk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap&font-display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --admin: #e74c3c;
+            --staff: #f39c12;
+            --student: #27ae60;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: var(--light);
+        }
+
+        .background-image {
+            display: none;
+        }
+
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://t3.ftcdn.net/jpg/02/20/90/06/360_F_220900600_ncRGLMAcUCeuC80mwcdsfogF7dwP8j9l.jpg') no-repeat center center/cover;
+            background-attachment: fixed;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        main::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        .welcome-section,
+        .login-portals {
+            position: relative;
+            z-index: 3;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            max-width: 900px;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .welcome-section h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .welcome-section p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--light);
+            opacity: 0.95;
+        }
+
+        .login-portals {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .portal-card {
+            background: white;
+            border-radius: 12px;
+            width: 320px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .portal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-portal {
+            border-top: 5px solid var(--admin);
+        }
+
+        .staff-portal {
+            border-top: 5px solid var(--staff);
+        }
+
+        .student-portal {
+            border-top: 5px solid var(--student);
+        }
+
+        .portal-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .portal-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .btn-admin {
+            background-color: var(--admin);
+            color: white;
+        }
+
+        .btn-staff {
+            background-color: var(--staff);
+            color: white;
+        }
+
+        .btn-student {
+            background-color: var(--student);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            animation: pulse 0.2s ease-out;
+            transform: scale(0.95);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--secondary);
+            outline-offset: 2px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1rem;
+            z-index: 3;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-toggle {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+            touch-action: manipulation;
+        }
+
+        .chatbot-toggle:hover,
+        .chatbot-toggle:focus {
+            transform: scale(1.1);
+            outline: 2px solid var(--light);
+            outline-offset: 2px;
+        }
+
+        .chatbot-window {
+            display: none;
+            background-color: white;
+            width: 360px;
+            height: 480px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            flex-direction: column;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            animation: slide-in 0.3s ease-out;
+            z-index: 1001;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chatbot-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px 10px;
+        }
+
+        .chatbot-close:hover,
+        .chatbot-close:focus {
+            color: var(--light);
+            outline: 2px solid var(--light);
+            border-radius: 4px;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            background-color: var(--secondary);
+            color: white;
+            text-align: right;
+            margin-left: 20%;
+        }
+
+        .message.bot {
+            background-color: var(--light);
+            color: var(--dark);
+            text-align: left;
+            margin-right: 20%;
+            border: 1px solid #ddd;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin-right: 8px;
+        }
+
+        .chatbot-input input:focus {
+            outline: 2px solid var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .chatbot-input button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            touch-action: manipulation;
+        }
+
+        .chatbot-input button:hover,
+        .chatbot-input button:focus {
+            background-color: var(--primary);
+            outline: 2px solid var(--light);
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+            }
+
+            .welcome-section h2 {
+                font-size: 2rem;
+            }
+
+            .welcome-section p {
+                font-size: 1rem;
+            }
+
+            .login-portals {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .portal-card {
+                width: 90%;
+                max-width: 340px;
+                padding: 1.5rem;
+            }
+
+            .portal-icon {
+                font-size: 3rem;
+            }
+
+            .portal-card h3 {
+                font-size: 1.4rem;
+            }
+
+            .portal-card p {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
+            }
+
+            .chatbot-window {
+                width: 90vw;
+                max-width: 320px;
+                height: 400px;
+                right: 10px;
+                bottom: 70px;
+            }
+
+            .chatbot-toggle {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header {
+                padding: 1rem;
+            }
+
+            .welcome-section {
+                margin-bottom: 2rem;
+                padding: 0 0.5rem;
+            }
+
+            .welcome-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .welcome-section p {
+                font-size: 0.95rem;
+            }
+
+            .portal-card {
+                width: 95%;
+                padding: 1.2rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            footer {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .chatbot-messages {
+                padding: 10px;
+            }
+
+            .message {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+
+            .chatbot-input input {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            .chatbot-input button {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .btn:active,
+            .portal-card,
+            .chatbot-toggle,
+            .chatbot-window {
+                animation: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="branding">
+        <div class="logo">
+            <img src="logo.png" alt="College Logo">
+            <h1>AAR Mahaveer Helpdesk</h1>
+        </div>
+        <p class="tagline">We're not just a helpdesk; we're your support team</p>
+    </header>
+
+    <main>
+        <img class="background-image" src="logo.png" alt="AAR Mahaveer Campus" loading="lazy" hidden>
+        <section class="welcome-section" aria-labelledby="welcome-heading">
+            <h2 id="welcome-heading">Welcome to Our College Helpdesk</h2>
+            <p>
+                This College Helpdesk Portal provides comprehensive support for all members of our academic community. 
+                Whether you're an administrator managing systems, staff member seeking technical assistance, 
+                or a student with queries, our platform connects you to the right resources efficiently. 
+                "Seeking support is a strength, not a weakness"
+            </p>
+        </section>
+
+        <section class="login-portals" aria-label="Login portals for different roles">
+            <div class="portal-card admin-portal">
+                <div class="portal-icon" aria-hidden="true">👨‍💼</div>
+                <h3>Admin Portal</h3>
+                <p>
+                    Access administrative tools to manage users, tickets, and system configurations. 
+                    Monitor helpdesk operations and generate reports.
+                </p>
+                <a href="admin_login.html" class="btn btn-admin" aria-label="Login to Admin Portal">Admin Login</a>
+            </div>
+
+            <div class="portal-card staff-portal">
+                <div class="portal-icon" aria-hidden="true">👩‍🏫</div>
+                <h3>Staff Portal</h3>
+                <p>
+                    Submit and track support tickets for classroom technology, software issues, 
+                    or other administrative needs also help students with their queries.
+                </p>
+                <a href="staff_login.html" class="btn btn-staff" aria-label="Login to Staff Portal">Staff Login</a>
+            </div>
+
+            <div class="portal-card student-portal">
+                <div class="portal-icon" aria-hidden="true">👨‍🎓</div>
+                <h3>Student Portal</h3>
+                <p>
+                    Get help with academic systems, campus services, or technical issues. 
+                    Track your submitted requests and find solutions. Get instant support.
+
+
+
+                </p>
+                <a href="student_login.html" class="btn btn-student" aria-label="Login to Student Portal">Student Login</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2010 Mahaveer Engineering College. All rights reserved.</p>
+        <p>Need assistance? Contact <a href="mahaveer8P@college.edu"aria-label="Email support">mahaveer8P@college.edu</a></p>
+    </footer>
+
+    <div class="chatbot-container">
+        <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open chatbot" title="Chat with us"><i class="fas fa-comment" aria-hidden="true"></i></button>
+        <div class="chatbot-window" id="chatbotWindow" role="dialog" aria-labelledby="chatbot-title">
+            <div class="chatbot-header">
+                <h3 id="chatbot-title">Helpdesk Bot</h3>
+                <span class="chatbot-close" id="chatbotClose" aria-label="Close chatbot" tabindex="0">×</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+                <div class="message bot">Hello! How can I assist you? Ask about admin, staff, or student login, or their roles.</div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your query..." aria-label="Enter your query">
+                <button id="chatbotSend" aria-label="Send query">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatbotToggle = document.getElementById('chatbotToggle');
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            const chatbotClose = document.getElementById('chatbotClose');
+            const chatbotSend = document.getElementById('chatbotSend');
+            const chatbotInput = document.getElementById('chatbotInput');
+            const chatbotMessages = document.getElementById('chatbotMessages');
+
+            chatbotToggle.addEventListener('click', () => {
+                chatbotWindow.classList.toggle('active');
+                if (chatbotWindow.classList.contains('active')) {
+                    chatbotInput.focus();
+                }
+            });
+
+            chatbotClose.addEventListener('click', () => {
+                chatbotWindow.classList.remove('active');
+            });
+
+            document.addEventListener('click', e => {
+                if (!chatbotWindow.contains(e.target) && !chatbotToggle.contains(e.target)) {
+                    chatbotWindow.classList.remove('active');
+                }
+            });
+
+            chatbotClose.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    chatbotWindow.classList.remove('active');
+                }
+            });
+
+            function handleQuery() {
+                const query = chatbotInput.value.trim().toLowerCase();
+                if (!query) return;
+
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.textContent = query;
+                chatbotMessages.appendChild(userMessage);
+
+               
+                let response = "Sorry, I didn't understand. Try asking about admin, staff, or student login, or their roles!";
+                if (query.includes('admin login') || query.includes('how to login as admin')) {
+                    response = 'To login as an admin, click the "Admin Login" button in the Admin Portal and use your admin credentials provided by the college.';
+                } else if (query.includes('staff login') || query.includes('how to login as staff')) {
+                    response = 'To login as a staff member, click the "Staff Login" button in the Staff Portal and use your staff email and password.';
+                } else if (query.includes('student login') || query.includes('how to login as student')) {
+                    response = 'To login as a student, click the "Student Login" button in the Student Portal and use your student ID and password.';
+                } else if (query.includes('admin role') || query.includes('what does admin do')) {
+                    response = 'Admins manage users, tickets, and system configurations. They monitor helpdesk operations and generate reports to ensure smooth functioning.';
+                } else if (query.includes('staff role') || query.includes('what does staff do')) {
+                    response = 'Staff members submit and track support tickets for classroom technology, software issues, or administrative needs. They also assist students with their queries.';
+                } else if (query.includes('student role') || query.includes('what does student do')) {
+                    response = 'Students use the helpdesk to get support for academic systems, campus services, or technical issues. They can submit and track their requests.';
+                } else if (query.includes('help') || query.includes('support')) {
+                    response = 'I can help with admin, staff, or student login processes or explain their roles. For example, ask "How to login as admin?" or "What does a staff member do?"';
+                }
+
+               
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot';
+                botMessage.textContent = response;
+                chatbotMessages.appendChild(botMessage);
+
+               
+                chatbotInput.value = '';
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+
+            chatbotSend.addEventListener('click', handleQuery);
+            chatbotInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') handleQuery();
+            });
+        });
+    </script>
+</body>
+</html>
