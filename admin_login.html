@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-image: url('https://t4.ftcdn.net/jpg/02/16/47/33/360_F_216473351_FCLq1pZQOBFrgcyPBphKvBd8Z5wjD1dI.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: backgroundFade 1.5s ease-in-out;
+        }
+        
+        @keyframes backgroundFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .auth-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .auth-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            animation: gradientFlow 3s ease infinite;
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            animation: textPop 0.8s ease-out forwards;
+        }
+        
+        .portal-title {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 1px;
+            animation: textPop 0.8s ease-out 0.2s forwards;
+        }
+        
+        @keyframes textPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+            position: relative;
+            opacity: 0;
+            animation: slideIn 0.6s ease-out forwards;
+            animation-delay: calc(0.7s + (var(--i, 0) * 0.2s));
+        }
+        .form-group-username {
+            --i: 1;
+        }
+        .form-group-password {
+            --i: 2;
+        }
+        .form-group-i-1 {
+            --i: 1;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        
+        .input-field {
+            position: relative;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            background-color: white;
+            transform: scale(1.02);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        input:focus + .input-icon {
+            color: var(--secondary);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .password-toggle:hover {
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: slideIn 0.6s ease-out 1s forwards;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover i {
+            transform: rotate(20deg);
+        }
+        
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin: 15px 0;
+            padding: 10px 15px;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 6px;
+            display: none;
+            text-align: left;
+            border-left: 3px solid var(--danger);
+            animation: shake 0.4s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%, 75% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+        
+        .forgot-password a {
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .forgot-password a:hover {
+            color: var(--secondary);
+            transform: translateX(3px);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--light);
+            color: var(--primary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: bounceIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        .back-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateX(-3px) rotate(-10deg);
+        }
+        
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            
+            .logo {
+                width: 100px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <button class="back-btn" onclick="window.location.href='frontpage.html'" title="Go back to front page">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        
+        <div class="logo-container">
+            <img src="https://aarm.ac.in/images/header/logo1.jpg" alt="college Logo" class="logo">
+            <div class="company-name">AAR Mahaveer College</div>
+            <div class="portal-title">ADMINISTRATOR PORTAL</div>
+        </div>
+        
+        <form id="adminLoginForm">
+            <div class="form-group form-group-username">
+                <label for="username">Admin ID</label>
+                <div class="input-field">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" name="username" placeholder="Enter admin username" required>
+                </div>
+            </div>
+            <div class="form-group form-group-password">
+                <label for="password">Password</label>
+                <div class="input-field">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+            </div>
+            
+            <div class="forgot-password">
+                <a href="#forgot-password">Forgot Password?</a>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-circle"></i> Invalid admin credentials!
+            </div>
+            
+            <button type="submit" class="btn">
+                <i class="fas fa-sign-in-alt"></i> Log In
+            </button>
+        </form>
+        
+        <div class="footer">
+            © 2010 AAR Mahaveer College. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+            
+           
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Form submitted');
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                console.log('Username:', username, 'Password:', password);
+                
+                const errorElement = document.getElementById('errorMessage');
+                const btn = this.querySelector('button[type="submit"]');
+                
+                errorElement.style.display = 'none';
+                
+                if (username === 'admin' && password === 'admin123') {
+                    console.log('Credentials valid, initiating redirect');
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+                    btn.disabled = true;
+                    
+                    setTimeout(() => {
+                        console.log('Redirecting to admin_dashboard.html');
+                        window.location.href = 'admin_dashboard.html';
+                    }, 1500);
+                } else {
+                    console.log('Invalid credentials');
+                    errorElement.style.display = 'block';
+                    errorElement.style.animation = 'none';
+                    errorElement.offsetHeight; 
+                    errorElement.style.animation = 'shake 0.4s ease-in-out';
+                    password.value = '';
+                    password.focus();
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Log In';
+                    btn.disabled = false;
+                }
+            });
+            
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value) {
+                        this.style.backgroundColor = 'white';
+                    } else {
+                        this.style.backgroundColor = '#f9f9f9';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
